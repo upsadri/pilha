@@ -1,0 +1,98 @@
+#include <stdio.h>
+#define MAX 100
+typedef struct {
+    int dados[MAX];
+    int topo;
+} Pilha;
+
+void inicializar(Pilha *p) {
+    p->topo = -1;
+}
+
+int estaVazia(Pilha *p) {
+    return p->topo == -1;
+}
+
+int estaCheia(Pilha *p) {
+    return p->topo == MAX - 1;
+}
+
+void push(Pilha *p, int valor) {
+    if (estaCheia(p)) return;
+    p->dados[++p->topo] = valor;
+}
+
+int pop(Pilha *p) {
+    if (estaVazia(p)) return -1;
+    return p->dados[p->topo--];
+}
+
+void esvaziar(Pilha *p) {
+    p->topo = -1;
+}
+
+int main() {
+    Pilha historico;
+    Pilha lixeira;
+    inicializar(&historico);
+    inicializar(&lixeira);
+
+    int opcao, acao;
+
+    do {
+        printf("\n====Menu====\n");
+        printf("1 - Nova acao\n");
+        printf("2 - Ctrl+Z - Desfazer\n");
+        printf("3 - Ctrl+Y - Refazer\n");
+        printf("4 - Ver estado das pilhas\n");
+        printf("0 - Sair\n");
+        printf("Opcao: ");
+        scanf("%d", &opcao);
+
+        if (opcao == 1) {
+            printf("Digite a acao: ");
+            scanf("%d", &acao);
+            push(&historico, acao);
+            esvaziar(&lixeira); // nova acao limpa a lixeira
+            }
+            else if (opcao == 2) {
+        if (!estaVazia(&historico)) {
+            acao = pop(&historico);
+            push(&lixeira, acao);
+            printf("Acao %d desfeita.\n", acao); 
+        } else {
+            printf("Nada para desfazer.\n");
+        }
+    }
+        else if (opcao == 3) {
+            if (!estaVazia(&lixeira)) {
+                acao = pop(&lixeira);
+                push(&historico, acao);
+            } else {
+                printf("Nada para refazer.\n");
+            }
+        }
+        else if (opcao == 4) {
+            printf("\n--- Historico ---\n");
+            if (estaVazia(&historico)) {
+                printf("Vazia\n");
+            } else {
+                for (int i = historico.topo; i >= 0; i--) {
+                    printf("Acao: %d\n", historico.dados[i]);
+                }
+            }
+
+            printf("\n--- Lixeira ---\n");
+            if (estaVazia(&lixeira)) {
+                printf("Vazia\n");
+            } else {
+                for (int i = lixeira.topo; i >= 0; i--) {
+                    printf("Acao: %d\n", lixeira.dados[i]);
+                }
+            }
+        }
+
+    } while (opcao != 0);
+
+    return 0;
+}
