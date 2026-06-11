@@ -1,0 +1,60 @@
+#include <stdio.h>
+#define MAX 10
+typedef struct {
+    int dados[MAX];
+    int topo;
+  
+} Pilha;
+
+void inicializar(Pilha *p) {
+    p->topo = -1;
+}
+
+int estaVazia(Pilha *p) {
+    return p->topo == -1;
+}
+
+int estaCheia(Pilha *p) {
+    return p->topo == MAX - 1;
+}
+
+void push(Pilha *p, int valor) {
+    if (estaCheia(p)) return;
+    p->dados[++p->topo] = valor;
+}
+
+int pop(Pilha *p) {
+    if (estaVazia(p)) return -1;
+    return p->dados[p->topo--];
+}
+
+void esvaziar(Pilha *p) {
+    p->topo = -1;
+}
+int main() {
+    Pilha p;
+    int original[MAX];
+    inicializar(&p);
+    int numero;
+    int quantidade;
+    int soma = 0;
+    
+    printf("quais numeros?");
+    scanf("%d",&numero);
+    
+   
+    
+    for(int i = 0; i < MAX; i++){
+    scanf("%d", &numero);  
+    original[i] = numero;
+    push(&p, numero);
+}
+   for(int i = 0; i < numero; i++){
+       printf("\nnumeros originais %d", original[i]);
+       
+   }
+    while(!estaVazia(&p)){
+         numero = pop(&p); 
+        printf("numeros invertidos: %d\n", numero);
+    }
+}
