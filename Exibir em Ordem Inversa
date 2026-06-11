@@ -38,23 +38,27 @@ int main() {
     int numero;
     int quantidade;
     int soma = 0;
-    
-    printf("quais numeros?");
-    scanf("%d",&numero);
-    
-   
-    
-    for(int i = 0; i < MAX; i++){
-    scanf("%d", &numero);  
-    original[i] = numero;
-    push(&p, numero);
-}
-   for(int i = 0; i < numero; i++){
-       printf("\nnumeros originais %d", original[i]);
-       
-   }
-    while(!estaVazia(&p)){
-         numero = pop(&p); 
-        printf("numeros invertidos: %d\n", numero);
+    float media;
+
+    printf("Quantos numeros? ");
+    scanf("%d", &quantidade);  // salva em `quantidade`
+
+    for(int i = 0; i < quantidade; i++){
+        scanf("%d", &numero);
+        original[i] = numero;
+        push(&p, numero);
     }
+
+    for(int i = 0; i < quantidade; i++){
+        printf("\nnumeros originais: %d\n", original[i]);
+    }
+
+    while(!estaVazia(&p)){
+        numero = pop(&p);
+        printf("\nnumeros invertidos: %d\n", numero);
+        soma += numero;
+    }
+     media = (float)soma / quantidade;
+    printf("\nsua media é %.2f", media);
+    printf("\nsoma total é %d", soma);
 }
