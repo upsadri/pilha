@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <string.h>
+#define MAX 10
+typedef struct {
+    char dados [MAX];
+    int topo;
+  
+} Pilha;
+
+void inicializar(Pilha *p) {
+    p->topo = -1;
+}
+
+int estaVazia(Pilha *p) {
+    return p->topo == -1;
+}
+
+int estaCheia(Pilha *p) {
+    return p->topo == MAX - 1;
+}
+
+void push(Pilha *p, char valor) {
+    if (estaCheia(p)) return;
+    p->dados[++p->topo] = valor;
+}
+
+int pop(Pilha *p) {
+    if (estaVazia(p)) return -1;
+    return p->dados[p->topo--];
+}
+
+void esvaziar(Pilha *p) {
+    p->topo = -1;
+}
+int main() {
+Pilha p;
+char nome[MAX];
+inicializar(&p);
+int palindromo = 1;
+
+printf("digite sua palavra");
+scanf("%s", nome);
+    int tamanho =strlen(nome);
+
+    for(int i = 0; i < tamanho; i++){
+        push(&p,  nome[i]);
+}
+    for(int i = 0; i < tamanho; i++){
+        if(pop(&p) != nome[i]){
+         palindromo = 0;
+         break;
+            }
+    }
+ if(palindromo){
+     printf("\nsua palavra é um Palíndromo");
+ }
+ else{
+     printf("\nsua palavra não é um Palíndromo");
+ }
+}
